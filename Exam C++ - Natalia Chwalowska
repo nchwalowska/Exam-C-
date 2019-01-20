@@ -53,27 +53,48 @@ double fr(double PMT, double PV, int n) // function for calculating r using Bina
     return r;
 }
 
-int main() {
-    
+int main()
+{
     string x;
-    double PMT, PV, r;
-    int n;
+    double PMT, PV, r, n;
     
     cout << "Which value do you want to calculate: PMT, PV, n, or r?" << endl;
     cin >> x;
     
-    if (x != "PMT" and x != "PV" and x != "n" and x != "r") {
+    while (x != "PMT" and x != "PV" and x != "n" and x != "r")
+    {
         cout << "Sorry, value not found. Please choose between 'PMT', 'PV', 'n' or 'r'." << endl;
+        cin >> x;
     }
     
     if (x == "PMT")
     {
         cout << "Insert the value of PV:" << endl;
         cin >> PV;
+        
+        while (PV <= 0)
+        {
+            cout << "Wrong value. Please insert the value of PV again:" << endl;
+            cin >> PV;
+        }
+        
         cout << "Insert the value of n:" << endl;
         cin >> n;
+        
+        while (n <= 0 or n != round(n))
+        {
+            cout << "Wrong value. Please insert the value of n again:" << endl;
+            cin >> n;
+        }
+        
         cout << "Insert the value of r (in the format '0.05' if 5%):" << endl;
         cin >> r;
+        
+        while (r <= 0)
+        {
+            cout << "Wrong value. Please insert the value of PV again:" << endl;
+            cin >> r;
+        }
         
         if (r >= 1)
         {
@@ -88,10 +109,30 @@ int main() {
     {
         cout << "Insert the value of PMT:" << endl;
         cin >> PMT;
+        
+        while (PMT <= 0)
+        {
+            cout << "Wrong value. Please insert the value of PMT again:" << endl;
+            cin >> PMT;
+        }
+        
         cout << "Insert the value of n:" << endl;
         cin >> n;
+        
+        while (n <= 0 or n != round(n))
+        {
+            cout << "Wrong value. Please insert the value of n again:" << endl;
+            cin >> n;
+        }
+        
         cout << "Insert the value of r (in the format '0.05' if 5%):" << endl;
         cin >> r;
+        
+        while (r <= 0)
+        {
+            cout << "Wrong value. Please insert the value of PV again:" << endl;
+            cin >> r;
+        }
         
         if (r >= 1)
         {
@@ -106,10 +147,30 @@ int main() {
     {
         cout << "Insert the value of PMT:" << endl;
         cin >> PMT;
+        
+        while (PMT <= 0)
+        {
+            cout << "Wrong value. Please insert the value of PMT again:" << endl;
+            cin >> PMT;
+        }
+        
         cout << "Insert the value of PV:" << endl;
         cin >> PV;
+        
+        while (PV <= 0)
+        {
+            cout << "Wrong value. Please insert the value of PV again:" << endl;
+            cin >> PV;
+        }
+        
         cout << "Insert the value of r (in the format '0.05' if 5%):" << endl;
         cin >> r;
+        
+        while (r <= 0)
+        {
+            cout << "Wrong value. Please insert the value of PV again:" << endl;
+            cin >> r;
+        }
         
         if (r >= 1)
         {
@@ -124,12 +185,33 @@ int main() {
     {
         cout << "Insert the value of PMT:" << endl;
         cin >> PMT;
+        
+        while (PMT <= 0)
+        {
+            cout << "Wrong value. Please insert the value of PMT again:" << endl;
+            cin >> PMT;
+        }
+        
         cout << "Insert the value of PV:" << endl;
         cin >> PV;
+        
+        while (PV <= 0)
+        {
+            cout << "Wrong value. Please insert the value of PV again:" << endl;
+            cin >> PV;
+        }
+        
         cout << "Insert the value of n:" << endl;
         cin >> n;
+        
+        while (n <= 0 or n != round(n))
+        {
+            cout << "Wrong value. Please insert the value of n again:" << endl;
+            cin >> n;
+        }
+        
         cout << "r equals: " << fr(PMT, PV, n) << " (" << round(fr(PMT, PV, n)*100) << "%)" << endl;
     }
-    
+    cout << "Thank you for using the program!" << endl;
     return 0;
 }
