@@ -1,0 +1,135 @@
+//  Exam - Natalia Chwalowska
+//  19/01/2019
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+// I use the formula given in the assignment: PMT / PV = r * (1 + 1 / ((1 + r)^n - 1))
+
+double fPMT(double PV, int n, double r) // function for calculating PMT
+{
+    return PV * r * (1 + (1/(pow(1 + r,n) - 1)));
+}
+
+double fPV(double PMT, int n, double r) // function for calculating PV
+{
+    return PMT / (r * (1 + (1/(pow(1 + r,n) - 1))));
+}
+
+int fn(double PMT, double PV, double r) // function for calculating n
+{
+    return round(log(PMT / (PMT - PV * r)) / log(1 + r));
+}
+
+double checkr(double PMT, double PV, int n, double r) // function for veryfying the ratio PV * r * (1 + 1 / ((1 + r)^n - 1)) / PMT (if r is correct the ratio should be equal to 1)
+{
+    return PV * r * (1 + (1/(pow(1 + r,n) - 1))) / PMT;
+}
+
+double errorr(double PMT, double PV, int n, double r) // function for veryfying how close is our estimated r to the real r (should be as close to 0 as possible)
+{
+    return abs(checkr(PMT, PV, n, r) - 1);
+}
+
+double fr(double PMT, double PV, int n) // function for calculating r using Binary Search
+{
+    double a(0), b(0.2), r(0.1);
+    
+    while (errorr(PMT, PV, n, r) > 0.000001)
+    {
+        if (errorr(PMT, PV, n, (a + r) / 2) < errorr(PMT, PV, n, (r + b) / 2))
+        {
+            b = r;
+            r = (a + b) / 2;
+        }
+        else
+        {
+            a = r;
+            r = (a + b) / 2;
+        }
+    }
+    return r;
+}
+
+int main() {
+    
+    string x;
+    double PMT, PV, r;
+    int n;
+    
+    cout << "Which value do you want to calculate: PMT, PV, n, or r?" << endl;
+    cin >> x;
+    
+    if (x != "PMT" and x != "PV" and x != "n" and x != "r") {
+        cout << "Sorry, value not found. Please choose between 'PMT', 'PV', 'n' or 'r'." << endl;
+    }
+    
+    if (x == "PMT")
+    {
+        cout << "Insert the value of PV:" << endl;
+        cin >> PV;
+        cout << "Insert the value of n:" << endl;
+        cin >> n;
+        cout << "Insert the value of r (in the format '0.05' if 5%):" << endl;
+        cin >> r;
+        
+        if (r >= 1)
+        {
+            cout << "Are you sure you inserted the value in the right format ('0.05' if 5%)? Please insert it again to make sure it is correct." << endl;
+            cin >> r;
+        }
+        
+        cout << "PMT equals: " << fPMT(PV, n, r) << endl;
+    }
+    
+    if (x == "PV")
+    {
+        cout << "Insert the value of PMT:" << endl;
+        cin >> PMT;
+        cout << "Insert the value of n:" << endl;
+        cin >> n;
+        cout << "Insert the value of r (in the format '0.05' if 5%):" << endl;
+        cin >> r;
+        
+        if (r >= 1)
+        {
+            cout << "Are you sure you inserted the value in the right format ('0.05' if 5%)? Please insert it again to make sure it is correct." << endl;
+            cin >> r;
+        }
+        
+        cout << "PV equals: " << fPV(PMT, n, r) << " (" << round(fPV(PMT, n, r)) << ")" << endl;
+    }
+    
+    if (x == "n")
+    {
+        cout << "Insert the value of PMT:" << endl;
+        cin >> PMT;
+        cout << "Insert the value of PV:" << endl;
+        cin >> PV;
+        cout << "Insert the value of r (in the format '0.05' if 5%):" << endl;
+        cin >> r;
+        
+        if (r >= 1)
+        {
+            cout << "Are you sure you inserted the value in the right format ('0.05' if 5%)? Please insert it again to make sure it is correct." << endl;
+            cin >> r;
+        }
+        
+        cout << "n equals: " << fn(PMT, PV, r) << endl;
+    }
+    
+    if (x == "r")
+    {
+        cout << "Insert the value of PMT:" << endl;
+        cin >> PMT;
+        cout << "Insert the value of PV:" << endl;
+        cin >> PV;
+        cout << "Insert the value of n:" << endl;
+        cin >> n;
+        cout << "r equals: " << fr(PMT, PV, n) << " (" << round(fr(PMT, PV, n)*100) << "%)" << endl;
+    }
+    
+    return 0;
+}
